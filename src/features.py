@@ -127,5 +127,5 @@ def save_vectorizer(vectorizer: TfidfVectorizer, path: str) -> None:
 def load_vectorizer(path: str) -> TfidfVectorizer:
     """Load a previously saved vectorizer."""
     vectorizer = joblib.load(path)
-    print(f"[features] Vectorizer loaded ← {path}")
+    print(f"[features] Vectorizer loaded from: {path}")
     return vectorizer
