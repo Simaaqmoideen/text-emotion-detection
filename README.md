@@ -1,3 +1,12 @@
+---
+title: Text Emotion Detection
+emoji: 🧠
+colorFrom: purple
+colorTo: blue
+sdk: docker
+pinned: false
+---
+
 <div align="center">
   <h1>🧠 AI-Powered Emotion Detection from Text</h1>
   <p><i>An End-to-End NLP Pipeline & Interactive Prototype</i></p>
