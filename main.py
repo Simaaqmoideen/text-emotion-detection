@@ -55,7 +55,7 @@ def build_synthetic_dataset() -> pd.DataFrame:
             # ---- HAPPY ----
             "I just got promoted at work! Best day ever!",
             "Sunshine and smiles, today is absolutely wonderful!",
-            "My best friend surprised me with a birthday cake 🎂",
+            "My best friend surprised me with a birthday cake",
             "I passed all my exams with flying colors!",
             "Finally got tickets to see my favorite band live!",
             "Today was the most amazing day of my entire life",
@@ -75,6 +75,10 @@ def build_synthetic_dataset() -> pd.DataFrame:
             "I feel so happy and full of joy!",
             "This makes me extremely happy!",
             "Happy days are here again!",
+            "my dream came true today",
+            "I finally achieved my lifelong dream!",
+            "Dreams do come true, I am living proof of it!",
+            "My dream job offer just arrived and I couldn't be happier!",
 
             # ---- SAD ----
             "I feel so lonely tonight, nobody seems to care anymore",
@@ -197,7 +201,7 @@ def build_synthetic_dataset() -> pd.DataFrame:
             "Water boils at 100 degrees Celsius.",
         ],
         "emotion": (
-            ["happy"] * 22
+            ["happy"] * 26
             + ["sad"] * 22
             + ["angry"] * 22
             + ["surprise"] * 22
@@ -313,6 +317,8 @@ Examples:
     predictor = EmotionPredictor(
         model=best_model,
         vectorizer=vectorizer,
+        # STRICT: Use sorted() to guarantee alignment with model.classes_
+        # Never use df["emotion"].unique() as it returns insertion order!
         class_names=sorted(df["emotion"].unique().tolist()),
         model_name="BestModel",
     )

@@ -30,6 +30,7 @@ from sklearn.model_selection import (
 )
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import LabelEncoder
 
 from src.features import (
     build_tfidf_vectorizer,
@@ -59,8 +60,9 @@ def _get_models() -> Dict[str, object]:
     surprisingly well on text classification tasks.
     """
     return {
+        # Primary model: LR with C=1.0 as specified — better semantic separation
         "LogisticRegression": LogisticRegression(
-            C=10.0,                      # Stronger regularization inverse
+            C=1.0,                       # Balanced regularization
             solver="lbfgs",              # Robust solver for multinomial
             class_weight="balanced",     # Handle class imbalances
             max_iter=1000,               # Ensure convergence
@@ -121,13 +123,22 @@ def train_and_evaluate(
 
     texts = df[text_column].values
     labels = df[label_column].values
+
+    # STRICT: Always use sorted order so class indices are deterministic
+    # and perfectly aligned between training and inference.
+    CANONICAL_CLASSES = ['angry', 'fear', 'happy', 'neutral', 'sad', 'surprise']
     class_names = sorted(np.unique(labels).tolist())
+    assert class_names == CANONICAL_CLASSES, (
+        f"Label mismatch! Found {class_names}, expected {CANONICAL_CLASSES}. "
+        "Check your dataset labels."
+    )
 
     print("=" * 65)
     print("  EMOTION DETECTION — MODEL TRAINING")
     print("=" * 65)
     print(f"  Total samples : {len(texts):,}")
     print(f"  Classes ({len(class_names)}): {class_names}")
+    print(f"  [VERIFIED] Class order is canonical and deterministic.")
     print(f"  Test split    : {test_size:.0%}")
     print(f"  Max features  : {max_features:,}")
     print("=" * 65)
@@ -168,6 +179,14 @@ def train_and_evaluate(
         t0 = time.perf_counter()
         model.fit(X_train, y_train)
         train_time = time.perf_counter() - t0
+
+        # STRICT: Verify model.classes_ aligns exactly with our canonical order
+        if hasattr(model, 'classes_'):
+            assert list(model.classes_) == class_names, (
+                f"CRITICAL: model.classes_ {list(model.classes_)} does not "
+                f"match expected {class_names}. Label encoding is misaligned!"
+            )
+            print(f"  [VERIFIED] model.classes_ = {list(model.classes_)}")
 
         # Predictions
         y_pred = model.predict(X_test)
