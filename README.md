@@ -23,36 +23,7 @@ Built as an internship project, it demonstrates best practices in data handling,
 ### 💻 Interactive Terminal UI
 Here is a sneak peek of the pipeline's interactive inference mode in action:
 
-```text
-$ python main.py
-
-=================================================================
-  STEP 4 / 4 — INFERENCE DEMO
-=================================================================
-
-  Running predictions on demo sentences:
-
-  📝 "I'm absolutely thrilled about my new job offer!..."
-     → HAPPY       (93.8%)  ████████████████████████████
-
-  📝 "I'm crying because I miss her so much it hurts..."
-     → SAD         (95.3%)  ████████████████████████████
-
-  📝 "This incompetent service is making me lose my mind!..."
-     → ANGRY       (96.8%)  █████████████████████████████
-
-─────────────────────────────────────────────────────────────────
-  INTERACTIVE MODE — Type a sentence to classify.
-  Type 'quit' or 'exit' to stop.
-─────────────────────────────────────────────────────────────────
-
-  You: I just won the lottery!
-  → Emotion   : SURPRISE
-  → Confidence: 82.1%
-  → All scores: surprise: 82.1% | happy: 10.4% | fear: 2.1% | neutral: 1.8% | angry: 1.8% | sad: 1.8%
-
-  You:   Goodbye! 👋
-```
+![Interactive Terminal UI Demonstration](assets/terminal_demo.png)
 
 ---
 
