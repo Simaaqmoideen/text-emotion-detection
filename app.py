@@ -223,5 +223,5 @@ def predict():
     })
 
 if __name__ == '__main__':
-    print("\n[OK] App running at --> http://127.0.0.1:5000\n")
-    app.run(debug=True, port=5000)
+    print("\n[OK] App running on port 7860 (Hugging Face Spaces ready)\n")
+    app.run(host='0.0.0.0', port=7860)
